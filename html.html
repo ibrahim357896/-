@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إلى بيبو .. حب حياتي</title>
+    <style>
+        :root {
+            --pink: #ff4d6d;
+            --dark-pink: #c9184a;
+            --light-pink: #ffb3c1;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #fff0f3;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        /* --- صفحة الدخول --- */
+        #login-page {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(255, 77, 109, 0.2);
+            z-index: 10;
+            width: 320px;
+        }
+
+        .user-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 4px solid var(--pink);
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+
+        h2 { color: var(--dark-pink); margin-top: 0; }
+
+        input {
+            padding: 12px;
+            width: 90%;
+            border: 2px solid var(--light-pink);
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 18px;
+            text-align: center;
+            outline: none;
+        }
+
+        button {
+            padding: 10px 30px;
+            background: var(--pink);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: 0.3s;
+        }
+
+        button:hover { background: var(--dark-pink); transform: scale(1.05); }
+
+        /* --- الصفحة الرئيسية --- */
+        #main-content {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            height: 100vh;
+            justify-content: center;
+            position: relative;
+        }
+
+        .photos-container {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            z-index: 5;
+        }
+
+        .couple-img {
+            width: 140px;
+            height: 140px;
+            border-radius: 20px;
+            border: 5px solid white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            object-fit: cover;
+            animation: heartBeat 1.5s infinite;
+        }
+
+        @keyframes heartBeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .message-box {
+            background: rgba(255, 255, 255, 0.85);
+            padding: 25px;
+            border-radius: 20px;
+            border: 3px dashed var(--pink);
+            max-width: 85%;
+            z-index: 5;
+            backdrop-filter: blur(5px);
+        }
+
+        .heart-float {
+            position: absolute;
+            pointer-events: none;
+            z-index: 1;
+            animation: float 4s linear infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(110vh) scale(0.5); opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+        }
+
+        .typing-text {
+            font-size: 22px;
+            color: var(--dark-pink);
+            font-weight: bold;
+            white-space: pre-line;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="login-page">
+        <img src="https://i.ibb.co/tTYcLBcY/1000133042.jpg" class="user-img" alt="بيبو">
+        <h2>هلو بيبو حياتي</h2>
+        <p>حطي الباسورد القولتلك عليه يا روحي</p>
+        <input type="password" id="password" placeholder="كلمة السر...">
+        <br>
+        <button onclick="checkPass()">افتحي قلبي</button>
+        <p id="error" style="color: red; display: none; margin-top: 10px;">كلمة السر غلط يا بيبو ركزي! 😉</p>
+    </div>
+
+    <div id="main-content">
+        <div id="heart-container"></div>
+        
+        <div class="photos-container">
+            <img src="https://i.ibb.co/gF9brWv8/1000133041.jpg" class="couple-img" alt="محمد">
+            <img src="https://i.ibb.co/tTYcLBcY/1000133042.jpg" class="couple-img" alt="بيبو">
+        </div>
+
+        <div class="message-box">
+            <h1 style="color: var(--dark-pink); margin-bottom: 10px;">كل سنة وإنتي معايا يا أحلى بيبو 🌹</h1>
+            <div class="typing-text" id="typing-text"></div>
+        </div>
+
+        <div style="font-size: 50px; margin-top: 20px; z-index: 5;">❤️🔐❤️</div>
+    </div>
+
+    <script>
+        function checkPass() {
+            const pass = document.getElementById('password').value;
+            if (pass === "توتي") {
+                document.getElementById('login-page').style.display = 'none';
+                document.getElementById('main-content').style.display = 'flex';
+                startHearts();
+                typeWriter();
+            } else {
+                document.getElementById('error').style.display = 'block';
+            }
+        }
+
+        function startHearts() {
+            const container = document.getElementById('heart-container');
+            const icons = ['❤️', '💖', '🌹', '✨', '🌸'];
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.innerHTML = icons[Math.floor(Math.random() * icons.length)];
+                heart.className = 'heart-float';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.fontSize = (Math.random() * 20 + 20) + 'px';
+                heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                container.appendChild(heart);
+                
+                setTimeout(() => heart.remove(), 5000);
+            }, 200);
+        }
+
+        const text = "من محمد لحبيبتي بيبو.. \n كل عيد حب وإنتي منورة دنيتي، \n إنتي مش بس بنوتي، إنتي كل دنيتي. \n بحبك بجنون يا أجمل حاجة حصلتلي!";
+        let i = 0;
+        function typeWriter() {
+            if (i < text.length) {
+                document.getElementById("typing-text").innerHTML += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 80);
+            }
+        }
+    </script>
+</body>
+</html>
